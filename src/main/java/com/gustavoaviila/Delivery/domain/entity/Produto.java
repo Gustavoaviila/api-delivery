@@ -30,7 +30,7 @@ public class Produto implements Serializable {
     private static final long serialVersionUID = 2432290893073158655L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "{campo.descricao.obrigatorio}")

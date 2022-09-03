@@ -30,7 +30,7 @@ public class Cliente  implements Serializable {
 	private static final long serialVersionUID = -2100931069255828697L;
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotEmpty(message = "{campo.nome.obrigatorio}")
@@ -38,11 +38,18 @@ public class Cliente  implements Serializable {
 
     @NotEmpty(message = "{campo.cpf.obrigatorio}")
     private String cpf;
+    
+    @NotEmpty(message = "{campo.rua.obrigatorio}")
+    private String rua;
+    
+    @NotEmpty(message = "{campo.numero.obrigatorio}")
+    private String numero;
+    
+    
+    private String cidade;
+    private String telefone;
 
     @JsonIgnore
     @OneToMany( mappedBy = "cliente" , fetch = FetchType.LAZY )
     private Set<Pedido> pedidos;
-
-	@OneToOne
-	private Endereco endereco;
 }

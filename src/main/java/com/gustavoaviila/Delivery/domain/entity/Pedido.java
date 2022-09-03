@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = -4502838769339750835L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne

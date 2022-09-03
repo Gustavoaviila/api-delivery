@@ -23,7 +23,7 @@ public class Entrega  implements Serializable{
 	private static final long serialVersionUID = 6330404803341962871L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@OneToOne
