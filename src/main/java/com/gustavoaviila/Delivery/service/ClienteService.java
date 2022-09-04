@@ -3,12 +3,14 @@ package com.gustavoaviila.Delivery.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.gustavoaviila.Delivery.domain.entity.Cliente;
 import com.gustavoaviila.Delivery.domain.repository.ClienteRepository;
+import com.gustavoaviila.Delivery.service.exceptions.DatabaseException;
 import com.gustavoaviila.Delivery.service.exceptions.ResourceNotFoundException;
 
 @Service
@@ -31,7 +33,14 @@ public class ClienteService {
 	}
 
 	public void delete(Integer id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+		
 	}
 
 	public Cliente update (Integer id, Cliente cliente) {
