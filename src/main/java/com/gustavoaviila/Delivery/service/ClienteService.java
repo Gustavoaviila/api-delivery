@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gustavoaviila.Delivery.domain.entity.Cliente;
 import com.gustavoaviila.Delivery.domain.repository.ClienteRepository;
+import com.gustavoaviila.Delivery.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClienteService {
@@ -22,7 +23,7 @@ public class ClienteService {
 
 	public Cliente findById(Integer id) {
 		Optional<Cliente> cliente = repository.findById(id);
-		return cliente.get();
+		return cliente.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 
 	public Cliente insert(Cliente cliente) {
@@ -36,17 +37,18 @@ public class ClienteService {
 	public Cliente update (Integer id, Cliente cliente) {
 		Optional<Cliente> entity = repository.findById(id);
 		if (entity.isPresent()) {
-			updateData(cliente, cliente);
-		}
+			updateData(entity, cliente);
 		return repository.save(entity.get());
+		}
+		return new Cliente();
 	}
 
-	private void updateData(Cliente entity, Cliente cliente) {
-		entity.setNome(cliente.getNome());
-		entity.setCpf(cliente.getCpf());
-		entity.setRua(cliente.getRua());
-		entity.setNumero(cliente.getNumero());
-		entity.setCidade(cliente.getCidade());
-		entity.setTelefone(cliente.getTelefone());
+	private void updateData(Optional<Cliente> entity, Cliente cliente) {
+		entity.get().setNome(cliente.getNome());
+		entity.get().setCpf(cliente.getCpf());
+		entity.get().setRua(cliente.getRua());
+		entity.get().setNumero(cliente.getNumero());
+		entity.get().setCidade(cliente.getCidade());
+		entity.get().setTelefone(cliente.getTelefone());
 	}
 }
