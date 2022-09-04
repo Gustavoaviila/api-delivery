@@ -1,6 +1,7 @@
 package com.gustavoaviila.Delivery.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,13 @@ public class ClienteService {
 	}
 
 	public Cliente update (Integer id, Cliente cliente) {
-		Optional<Cliente> entity = repository.findById(id);
-		if (entity.isPresent()) {
+		try {
+			Optional<Cliente> entity = repository.findById(id);
 			updateData(entity, cliente);
-		return repository.save(entity.get());
+			return repository.save(entity.get());
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException(id);
 		}
-		return new Cliente();
 	}
 
 	private void updateData(Optional<Cliente> entity, Cliente cliente) {
