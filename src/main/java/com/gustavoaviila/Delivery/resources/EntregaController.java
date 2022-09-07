@@ -17,46 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gustavoaviila.Delivery.domain.entity.Cliente;
+import com.gustavoaviila.Delivery.domain.entity.Entrega;
 import com.gustavoaviila.Delivery.service.ClienteService;
+import com.gustavoaviila.Delivery.service.EntregaService;
 
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping("/clientes")
-@Api("Api Clientes")
-public class ClienteController {
+@RequestMapping("/entregas")
+@Api("Api Entregas")
+public class EntregaController {
 	
 	@Autowired
-	private ClienteService service;
+	private EntregaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Cliente>> findAll(){
-		List<Cliente> clientes = service.findAll();
-		return ResponseEntity.ok().body(clientes);
+	public ResponseEntity<List<Entrega>> findAll(){
+		List<Entrega> entregas = service.findAll();
+		return ResponseEntity.ok().body(entregas);
 	}
 	
 	@GetMapping("{id}")
-    public ResponseEntity<Cliente> findById(@PathVariable Integer id){
+    public ResponseEntity<Entrega> findById(@PathVariable Integer id){
 		return ResponseEntity.ok().body(service.findById(id));
 		
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> insert (@RequestBody Cliente cliente){
-		cliente = service.insert(cliente); 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
-		return ResponseEntity.created(uri).body(cliente);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete (@PathVariable Integer id){
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> update (@PathVariable Integer id, @RequestBody Cliente cliente){
-		cliente = service.update(id, cliente);
-		return ResponseEntity.ok().body(cliente);
+	public ResponseEntity<Entrega> insert (@RequestBody Entrega entrega){
+		entrega = service.insert(entrega); 
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(entrega.getId()).toUri();
+		return ResponseEntity.created(uri).body(entrega);
 	}
 }

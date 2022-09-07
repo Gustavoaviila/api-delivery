@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,10 +31,12 @@ public class ClienteService {
 		return cliente.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 
+	@Transactional
 	public Cliente insert(Cliente cliente) {
 		return repository.save(cliente);
 	}
 
+	@Transactional
 	public void delete(Integer id) {
 		try {
 			repository.deleteById(id);
@@ -44,6 +48,7 @@ public class ClienteService {
 		
 	}
 
+	@Transactional
 	public Cliente update (Integer id, Cliente cliente) {
 		try {
 			Optional<Cliente> entity = repository.findById(id);

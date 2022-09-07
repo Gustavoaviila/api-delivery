@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,10 +31,12 @@ public class ProdutoService {
 		return produto.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 
+	@Transactional
 	public Produto insert(Produto produto) {
 		return repository.save(produto);
 	}
 
+	@Transactional
 	public void delete(Integer id) {
 		try {
 			repository.deleteById(id);
@@ -44,6 +48,7 @@ public class ProdutoService {
 		
 	}
 
+	@Transactional
 	public Produto update (Integer id, Produto produto) {
 		try {
 			Optional<Produto> obj = repository.findById(id);

@@ -2,20 +2,22 @@ package com.gustavoaviila.Delivery.domain.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.gustavoaviila.Delivery.domain.enums.StatusPedido;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,27 +29,30 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "tb_pedido")
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = -4502838769339750835L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    private LocalDate dataPedido;
+    @Column(name = "data_pedido")
+    private LocalDateTime dataPedido;
 
-    @Column(precision = 2, scale = 20)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
-    
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
-    
-    @OneToOne
-    private Entrega entrega;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedido status;
+
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens;
 }

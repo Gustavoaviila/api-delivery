@@ -21,8 +21,11 @@ import com.gustavoaviila.Delivery.domain.entity.Produto;
 import com.gustavoaviila.Delivery.service.ClienteService;
 import com.gustavoaviila.Delivery.service.ProdutoService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping("/produtos")
+@Api("Api Produtos")
 public class ProdutoController {
 	
 	@Autowired

@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table
+@Table(name = "tb_produto")
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 2432290893073158655L;
@@ -38,9 +38,4 @@ public class Produto implements Serializable {
 
     @NotNull(message = "{campo.preco.obrigatorio}")
     private BigDecimal preco;
-    
-    @JsonIgnore
-    @OneToMany( mappedBy = "produto" , fetch = FetchType.LAZY )
-    private Set<Pedido> pedidos;
-
 }
