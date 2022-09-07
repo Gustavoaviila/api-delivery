@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +20,6 @@ import com.gustavoaviila.Delivery.domain.entity.Pedido;
 import com.gustavoaviila.Delivery.domain.entity.Produto;
 import com.gustavoaviila.Delivery.domain.enums.StatusPedido;
 import com.gustavoaviila.Delivery.domain.repository.ClienteRepository;
-import com.gustavoaviila.Delivery.domain.repository.EntregaRepository;
 import com.gustavoaviila.Delivery.domain.repository.ItemsPedidoRepository;
 import com.gustavoaviila.Delivery.domain.repository.PedidoRepository;
 import com.gustavoaviila.Delivery.domain.repository.ProdutoRepository;
@@ -65,7 +63,6 @@ public class PedidoService {
                 .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
 
         Pedido pedido = new Pedido();
-        pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setCliente(cliente);
 
@@ -117,15 +114,17 @@ public class PedidoService {
         return items
                 .stream()
                 .map( dto -> {
+                    Integer idProduto = dto.getIdProduto();
                     Produto produto = produtoRepository
-                            .findById(dto.getIdProduto())
+                            .findById(idProduto)
                             .orElseThrow(
                                     () -> new RegraNegocioException(
-                                            "Código de produto inválido: "+ dto.getIdProduto()
+                                            "Código de produto inválido: "+ idProduto
                                     ));
 
                     ItemPedido itemPedido = new ItemPedido();
                     itemPedido.setQuantidade(dto.getQuantidade());
+                    pedido.setTotal(itemPedido.getQuantidade() * produto.getPreco());
                     itemPedido.setPedido(pedido);
                     itemPedido.setProduto(produto);
                     return itemPedido;
