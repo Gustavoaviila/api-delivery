@@ -2,7 +2,7 @@ FROM openjdk:8
 
 WORKDIR /opt/spring_boot
 
-COPY /target/spring-boot*.jar delivery-0.1.jar
+COPY /target/spring-boot*.jar delivery-0.0.1.jar
 
 SHELL ["/bin/sh", "-c"]
 
