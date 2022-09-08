@@ -11,3 +11,15 @@ Os comandos apresentados são necessários para compilar o projeto e preparar/ex
 3 - Executar a imagem Docker docker-compose up -d Obs: as portas são customizaveis
 
 4 - Depois de realizar as operações acima é possivel acessar a aplicação via browser nos seguintes PATH: localhost:8080/**
+
+5 - API cliente localhost:8080/clientes
+
+6 - API produto localhost:8080/produtos
+
+7 - API pedido localhost:8080/pedidos
+
+8 - API entrega localhost:8080/entregas
+
+9 - API usuario localhost:8080/usuarios
+
+10 - API autenticao de usuario localhost:8080/usuarios/auth
