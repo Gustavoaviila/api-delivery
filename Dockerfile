@@ -9,4 +9,4 @@ SHELL ["/bin/sh", "-c"]
 EXPOSE 5005
 EXPOSE 8080
 
-CMD ["java", "-jar", "delivery-0.1.jar"]
+CMD ["java", "-jar", "delivery-0.0.1.jar"]
